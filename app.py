@@ -4,18 +4,20 @@ from __future__ import annotations
 import typing as ty  # noqa: F401
 
 import argparse
-import logging
 import os
-import time
+import platform
 import dataclasses
 import subprocess
-import urllib.parse as urlparse
 from concurrent.futures import ThreadPoolExecutor, Future
 import yaml
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--concurrent', type=int, default=1)
 parser.add_argument('manifest', type=str)
+
+DEFAULT_VIDEO_CODEC = 'libx264'
+if platform.system() == 'Darwin':
+    DEFAULT_VIDEO_CODEC = 'h264_videotoolbox'
 
 
 @dataclasses.dataclass
@@ -61,7 +63,7 @@ class VideoClipper(object):
     pool: ThreadPoolExecutor
     futures: ty.List[Future]
     DEFAULT_OUTPUT_EXT = 'mp4'
-    DEFAULT_OUTPUT_VIDEO_CODEC = ['-codec:v', 'h264_videotoolbox', '-vf', 'scale=1920:1080', '-b:v', '6000k']
+    DEFAULT_OUTPUT_VIDEO_CODEC = ['-codec:v', DEFAULT_VIDEO_CODEC, '-vf', 'scale=1920:1080', '-b:v', '6000k']
     DEFAULT_OUTPUT_AUDIO_CODEC = ['-codec:a', 'aac']
     CLIPPING_CODEC = ['-c', 'copy']
 

@@ -1,0 +1,13 @@
+---
+
+source: path/to/source/video.mp4
+output_dir: path/to/output/directory  # Output directory
+output_extension: mp4
+clips:
+  - start: 00:05:48.000   # Start time of the clip
+    end: 00:15:40.000     # End time of the clip
+    title: "Title of the Clip 1"
+  - start: 00:15:58.000
+    end: 00:22:25.000
+    title:  "Title of the Clip 1"
+

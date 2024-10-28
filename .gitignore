@@ -127,8 +127,8 @@ cython_debug/
 .vscode/
 proxy.sh
 
-!manifest.sample.yaml
 manifest*.yaml
+!manifest.sample.yaml
 
 
 .DS_Store
