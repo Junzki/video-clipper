@@ -16,7 +16,7 @@ Clips multiple video clips from one video file.
    ```
 3. Run command below to start clipping.
    ```bash
-   python -m videp_clipper manifest.yaml`
+   python -m videp_clipper manifest.yaml
    ```
 
 ## Why the Package Has a Different Name?
