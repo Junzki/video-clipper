@@ -128,7 +128,7 @@ cython_debug/
 proxy.sh
 
 manifest*.yaml
-!manifest.sample.yaml
+!video_clipper/data/manifest.sample.yaml
 
 
 .DS_Store

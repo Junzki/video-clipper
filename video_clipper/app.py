@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+import shutil
 import typing as ty  # noqa: F401
 
-import argparse
 import os
 import platform
+import pathlib
 import dataclasses
 import subprocess
-from concurrent.futures import ThreadPoolExecutor, Future
 import yaml
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--concurrent', type=int, default=1)
-parser.add_argument('manifest', type=str)
+BASE_DIR = pathlib.Path(__file__).resolve().parent
+SAMPLE_MANIFEST = BASE_DIR / 'data' / 'manifest.sample.yaml'
 
 DEFAULT_VIDEO_CODEC = 'libx264'
 if platform.system() == 'Darwin':
@@ -60,8 +59,6 @@ class Manifest:
 
 class VideoClipper(object):
 
-    pool: ThreadPoolExecutor
-    futures: ty.List[Future]
     DEFAULT_OUTPUT_EXT = 'mp4'
     DEFAULT_OUTPUT_VIDEO_CODEC = ['-codec:v', DEFAULT_VIDEO_CODEC, '-vf', 'scale=1920:1080', '-b:v', '6000k']
     DEFAULT_OUTPUT_AUDIO_CODEC = ['-codec:a', 'aac']
@@ -83,10 +80,6 @@ class VideoClipper(object):
 
             print("Cmd: ", subprocess.list2cmdline(cmd))
             subprocess.run(cmd)
-
-    def __init__(self, workers: int = 1) -> None:
-        self.pool = ThreadPoolExecutor(workers)
-        self.futures = list()
 
     @staticmethod
     def initial_ffmpeg(ctx: _Context) -> _Context:
@@ -139,7 +132,8 @@ class VideoClipper(object):
 
         os.remove(source)
 
-    def clip_from_manifest(self, manifest: Manifest) -> None:
+    def clip_from_manifest(self, manifest: Manifest,
+                           target_dir: str = None) -> None:
         if not os.path.exists(manifest.output_dir):
             os.makedirs(manifest.output_dir, exist_ok=True)
 
@@ -162,10 +156,11 @@ class VideoClipper(object):
             self.compress_clip(clip)
 
 
-if __name__ == '__main__':
+def create_manifest(target: ty.Optional[str] = None):
+    if not target:
+        target = os.path.join(os.getcwd(), 'manifest.yaml')
+    elif os.path.isdir(target):
+        target = os.path.join(target, 'manifest.yaml')
 
-    args, _ = parser.parse_known_args()
-    manifest_ = Manifest.parse_manifest(args.manifest)
-
-    clipper = VideoClipper(args.concurrent)
-    clipper.clip_from_manifest(manifest_)
+    shutil.copy(SAMPLE_MANIFEST, target)
+    print(target)

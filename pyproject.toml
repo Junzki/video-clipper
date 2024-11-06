@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools >= 61.0", "setuptools_scm[toml] >= 6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "video-clipper-r"
+dynamic = ["version", "dependencies"]
+authors = [
+    {name = "Andrija Junzki", email = "andrew.junzki@gmail.com"}
+]
+maintainers = [
+    {name = "Andrija Junzki", email = "andrew.junzki@gmail.com"}
+]
+description = "Clips multiple video clips from one video file."
+keywords = ["video", "ffmpeg", "clip"]
+readme = "README.md"
+classifiers = [
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    "Development Status :: 4 - Beta",
+
+    # Indicate who your project is intended for
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Multimedia :: Video :: Conversion",
+
+    # Pick your license as you wish (see also "license" above)
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+
+    # Specify the Python versions you support here.
+    "Programming Language :: Python :: 3"
+]
+requires-python = ">= 3.8"
+
+
+[project.urls]
+Homepage = "https://github.com/Junzki/video-clipper"
+Repository = "https://github.com/Junzki/video-clipper.git"
+Issues = "https://github.com/Junzki/video-clipper/issues"
+Changelog = "https://github.com/Junzki/video-clipper/blob/master/CHANGELOG.md"
+
+[tool.setuptools]
+# ...
+# By default, include-package-data is true in pyproject.toml,
+# so you do NOT have to specify this line.
+include-package-data = true
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

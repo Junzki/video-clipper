@@ -1,0 +1,2 @@
+include video_clipper/*.py
+include video_clipper/data/manifest.sample.yaml
