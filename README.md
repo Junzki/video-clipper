@@ -12,11 +12,13 @@ Clips multiple video clips from one video file.
    ```
 2. Create `manifest.yaml` with command below:  
    ```bash
-   python -m video_clipper init-manifest
+   python -m video_clipper init-manifest  --source-video "path/to/source/video.mp4"
    ```
+   This command will create a `manifest.yaml` file in the same directory with the preferred source video.   
+
 3. Run command below to start clipping.
    ```bash
-   python -m video_clipper manifest.yaml
+   python -m video_clipper clip manifest.yaml
    ```
 
 ## Why the Package Has a Different Name?

@@ -1,0 +1,9 @@
+---
+
+source: {{ source_video }}
+output_dir: {{ output_dir }}  # Output directory
+output_extension: mp4
+clips:
+  - start: {{ clip_1_start }}   # Start time of the clip
+    end: {{ clip_1_end }}     # End time of the clip
+    title: "{{ clip_1_title }}"
