@@ -1,3 +1,4 @@
 click
+ffmpeg-progress
 PyYAML
 jinja2

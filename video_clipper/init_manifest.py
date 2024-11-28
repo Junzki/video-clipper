@@ -18,11 +18,8 @@ def probe_duration(source_video: str) -> str:
     Get the duration via ffprobe from input media file
     in case ffmpeg was run with loglevel=error.
 
-    Args:
-        cmd (List[str]): A list of command line elements, e.g. ["ffmpeg", "-i", ...]
-
-    Returns:
-        Optional[int]: The duration in milliseconds.
+    :param source_video: Path to the source video file.
+    :return: Duration of the video in HH:MM:SS.ffffff format.
     """
 
     output = subprocess.check_output(

@@ -71,12 +71,15 @@ class VideoClipper(object):
             ]
 
             print("Cmd: ", subprocess.list2cmdline(cmd))
+
+
             subprocess.run(cmd)
 
     @staticmethod
     def initial_ffmpeg(ctx: _Context) -> _Context:
         ctx.initial_params.extend([
-            '-hide_banner'
+            '-hide_banner',
+            '-progress', '-'
         ])
         return ctx
 
