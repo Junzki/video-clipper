@@ -77,10 +77,15 @@ class FFmpegCmd(object):
             'ffmpeg',
             '-loglevel', 'quiet',  # Hide logs
             '-hide_banner',
-            '-progress', 'pipe:2'  # Write progress to stdout
         ]
         self.input_params = list()
         self.output_params = list()
+
+        self.video_length = 0
+
+    def track_progress(self, final_time: int):
+        self.video_length = final_time
+        self.initial_params.extend(['-progress', 'pipe:2'])
 
     def execute(self):
         cmd = [
