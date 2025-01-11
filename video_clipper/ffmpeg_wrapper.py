@@ -72,12 +72,14 @@ def extract_ffmpeg_progress(in_: str) -> (bool, ty.Dict[str, ty.Any]):
 
 class FFmpegCmd(object):
 
-    def __init__(self):
-        self.initial_params = [
-            'ffmpeg',
-            '-loglevel', 'quiet',  # Hide logs
-            '-hide_banner',
-        ]
+    def __init__(self, explicit_initial_params: ty.List[str] = None):
+        if not explicit_initial_params:
+            self.initial_params = [
+                '-loglevel', 'quiet',  # Hide logs
+                '-hide_banner',
+            ]
+        else:
+            self.initial_params = explicit_initial_params
         self.input_params = list()
         self.output_params = list()
 
@@ -89,6 +91,7 @@ class FFmpegCmd(object):
 
     def execute(self):
         cmd = [
+            'ffmpeg',
             *self.initial_params,
             *self.input_params,
             *self.output_params
@@ -96,4 +99,5 @@ class FFmpegCmd(object):
 
         print("Cmd: ", subprocess.list2cmdline(cmd))
 
-        subprocess.run(cmd)
+        out = subprocess.run(cmd, capture_output=True)
+        return out

@@ -7,7 +7,12 @@ import platform
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 MANIFEST_TEMPLATE = BASE_DIR / 'templates' / 'manifest.template.yaml'
 
-DEFAULT_VIDEO_CODEC = 'libx264'
+GENERIC_VIDEO_CODECS = [
+    'libx264',
+    'libx265'
+]
+
+DEFAULT_VIDEO_CODEC = 'h264_nvenc'
 if platform.system() == 'Darwin':
     DEFAULT_VIDEO_CODEC = 'h264_videotoolbox'
 
