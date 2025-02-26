@@ -7,16 +7,51 @@ import platform
 from .ffmpeg_wrapper import FFmpegCmd
 
 
-def list_hardware_accel_devices() -> ty.List[str]:
-    cmd = FFmpegCmd(['-hide-banner', '-hwaccels'])
-    out = cmd.execute()
-    raw_ = out.stdout.decode().split('\n')
-    hwaccels = [x.strip() for x in raw_[1:] if x.strip()]
-    return hwaccels
+class VideoEncoderProvider(object):
+
+    @staticmethod
+    def list_hardware_accel_devices() -> ty.List[str]:
+        cmd = FFmpegCmd(['-hide-banner', '-hwaccels'])
+        out = cmd.execute()
+        raw_ = out.stdout.decode().split('\n')
+        hwaccels = [x.strip() for x in raw_[1:] if x.strip()]
+        return hwaccels
+
+    def get_codec_list(self) -> ty.List[str]:
+        """ List prioritized codecs based on hardware acceleration availability.
+        """
+        codecs = [
+            'libx264',
+            'libx265'
+        ]
+
+        if platform.system() == 'Darwin':
+            codecs.append('h264_videotoolbox')
+
+        accel_devices = self.list_hardware_accel_devices()
+        if 'vaapi' in accel_devices:
+            codecs.append('h264_vaapi')
+
+        if 'cuda' in accel_devices:
+            codecs.append('h264_nvenc')
+
+        codecs.reverse()
+
+        return codecs
+
+    def __init__(self):
+        self._codec_list = self._get_codec_list()
+    ...
+
+
+
 
 
 def support_nvenc(codec_list: ty.List[str]) -> bool:
-    return 'nvenc' in codec_list
+    return 'cuda' in codec_list
+
+def support_vaapi(codec_list: ty.List[str]) -> bool:
+    return 'vaapi' in codec_list
 
 
 def get_available_video_codecs() -> ty.List[str]:
