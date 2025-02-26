@@ -9,44 +9,45 @@ import subprocess
 import yaml
 import click
 from .constants import DEFAULT_VIDEO_CODEC
+from .manifest import parse_manifest, ClipBatch, VideoClip
 
 
-@dataclasses.dataclass
-class VideoClip:
-    start: str
-    end: str
-    title: ty.Union[str, None] = None
-    output_filename: ty.Union[str, None] = None
-
-
-@dataclasses.dataclass
-class Manifest:
-    source: str
-    output_dir: ty.Union[str, None] = None
-    clips: ty.List[VideoClip] = dataclasses.field(default_factory=list)
-    output_extension: str | None = None
-
-    @classmethod
-    def parse_manifest(cls, input_file_: str):
-        with open(input_file_, 'r') as f:
-            data = yaml.load(f, Loader=yaml.SafeLoader)
-
-        source = data['source']
-        output_dir = data.get('output_dir', None)
-        output_ext = data.get('output_extension')
-
-        if not output_dir:
-            output_dir = os.path.join(os.path.dirname(source), 'clips')
-
-        out_ = cls(source, output_dir, output_extension=output_ext)
-
-        for clip in data['clips']:
-            start = clip['start']
-            end = clip['end']
-            title = clip.get('title', None)
-            out_.clips.append(VideoClip(start, end, title))
-
-        return out_
+# @dataclasses.dataclass
+# class VideoClip:
+#     start: str
+#     end: str
+#     title: ty.Union[str, None] = None
+#     output_filename: ty.Union[str, None] = None
+#
+#
+# @dataclasses.dataclass
+# class Manifest:
+#     source: str
+#     output_dir: ty.Union[str, None] = None
+#     clips: ty.List[VideoClip] = dataclasses.field(default_factory=list)
+#     output_extension: str | None = None
+#
+#     @classmethod
+#     def parse_manifest(cls, input_file_: str):
+#         with open(input_file_, 'r') as f:
+#             data = yaml.load(f, Loader=yaml.SafeLoader)
+#
+#         source = data['source']
+#         output_dir = data.get('output_dir', None)
+#         output_ext = data.get('output_extension')
+#
+#         if not output_dir:
+#             output_dir = os.path.join(os.path.dirname(source), 'clips')
+#
+#         out_ = cls(source, output_dir, output_extension=output_ext)
+#
+#         for clip in data['clips']:
+#             start = clip['start']
+#             end = clip['end']
+#             title = clip.get('title', None)
+#             out_.clips.append(VideoClip(start, end, title))
+#
+#         return out_
 
 
 class VideoClipper(object):
@@ -55,6 +56,9 @@ class VideoClipper(object):
     DEFAULT_OUTPUT_VIDEO_CODEC = ['-codec:v', DEFAULT_VIDEO_CODEC, '-vf', 'scale=1920:1080', '-b:v', '6000k']
     DEFAULT_OUTPUT_AUDIO_CODEC = ['-codec:a', 'aac']
     CLIPPING_CODEC = ['-c', 'copy']
+
+    def __init__(self):
+        self.clips = list()
 
     class _Context(object):
 
@@ -84,7 +88,7 @@ class VideoClipper(object):
         return ctx
 
     @staticmethod
-    def build_input(ctx: _Context, m: Manifest) -> _Context:
+    def build_input(ctx: _Context, m: ClipBatch) -> _Context:
         ctx.input_params.extend(['-i', m.source])
         return ctx
 
@@ -95,7 +99,7 @@ class VideoClipper(object):
 
 
     def build_output(self, ctx: _Context,
-                     manifest: Manifest, clip: VideoClip) -> (_Context, VideoClip):
+                     manifest: ClipBatch, clip: VideoClip) -> (_Context, VideoClip):
         if not clip.title:
             clip_name = self.build_default_clip_name(manifest.source, clip.start, clip.end)
         else:
@@ -127,7 +131,7 @@ class VideoClipper(object):
 
         os.remove(source)
 
-    def clip_from_manifest(self, manifest: Manifest) -> None:
+    def clip_from_manifest(self, manifest: ClipBatch) -> None:
         if not os.path.exists(manifest.output_dir):
             os.makedirs(manifest.output_dir, exist_ok=True)
 
@@ -138,22 +142,26 @@ class VideoClipper(object):
         ctx = self.initial_ffmpeg(ctx)
         ctx = self.build_input(ctx, manifest)
 
-        proceed_clips = list()
-
         for clip in manifest.clips:
             ctx, clip = self.build_output(ctx, manifest, clip)
-            proceed_clips.append(clip)
+            if clip.compress_output:
+                self.clips.append(clip)
 
         ctx.execute()
 
-        for clip in proceed_clips:
-            self.compress_clip(clip)
+    # def do_compress(self):
+    #     for c in self.clips:
+    #         if c.compress_output:
+    #             self.compress_clip(c)
 
 @click.command(name='clip')
 @click.argument('manifest-file', required=True,
                 type=click.Path(exists=True, dir_okay=False))
 def cli_clip_with_manifest(manifest_file: str) -> None:
-    manifest = Manifest.parse_manifest(manifest_file)
+    tasks = parse_manifest(manifest_file)
 
     clipper = VideoClipper()
-    clipper.clip_from_manifest(manifest)
+    for task in tasks:
+        clipper.clip_from_manifest(task)
+
+    # clipper.do_compress()
