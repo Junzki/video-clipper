@@ -1,0 +1,151 @@
+ffmpeg started on 2024-11-20 at 22:27:25
+Report written to "ffmpeg-20241120-222725.log"
+Log level: 48
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/IMG_6601.MOV':
+  Metadata:
+    major_brand     : qt
+    minor_version   : 0
+    compatible_brands: qt
+    creation_time   : 2024-11-07T12:17:27.000000Z
+    com.apple.quicktime.location.accuracy.horizontal: 8.002625
+    com.apple.quicktime.location.ISO6709: +40.0530+116.2956+050.867/
+    com.apple.quicktime.make: Apple
+    com.apple.quicktime.model: iPhone 13
+    com.apple.quicktime.software: 17.6.1
+    com.apple.quicktime.creationdate: 2024-11-07T20:17:27+0800
+  Duration: 00:00:56.93, start: 0.000000, bitrate: 9132 kb/s
+  Stream #0:0[0x1](und): Video: hevc (Main 10) (hvc1 / 0x31637668), yuv420p10le(tv, bt2020nc/bt2020/arib-std-b67), 1920x1080, 8557 kb/s, 30 fps, 30 tbr, 600 tbn (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Video
+        vendor_id       : [0][0][0][0]
+        encoder         : HEVC
+      Side data:
+        DOVI configuration record: version: 1.0, profile: 8, level: 4, rpu flag: 1, el flag: 0, bl flag: 1, compatibility id: 4
+        Ambient Viewing Environment, ambient_illuminance=314.000000, ambient_light_x=0.312700, ambient_light_y=0.329000
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 187 kb/s (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Audio
+        vendor_id       : [0][0][0][0]
+  Stream #0:2[0x3](und): Data: none (mebx / 0x7862656D), 0 kb/s (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Metadata
+  Stream #0:3[0x4](und): Data: none (mebx / 0x7862656D), 223 kb/s (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Metadata
+  Stream #0:4[0x5](und): Data: none (mebx / 0x7862656D), 147 kb/s (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Metadata
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #0:1 -> #0:1 (copy)
+  Stream #0:0 -> #1:0 (copy)
+  Stream #0:1 -> #1:1 (copy)
+  Stream #0:0 -> #2:0 (copy)
+  Stream #0:1 -> #2:1 (copy)
+Output #0, mp4, to '/IMG_6601.1.MOV.mp4':
+  Metadata:
+    major_brand     : qt
+    minor_version   : 0
+    compatible_brands: qt
+    com.apple.quicktime.creationdate: 2024-11-07T20:17:27+0800
+    com.apple.quicktime.location.accuracy.horizontal: 8.002625
+    com.apple.quicktime.location.ISO6709: +40.0530+116.2956+050.867/
+    com.apple.quicktime.make: Apple
+    com.apple.quicktime.model: iPhone 13
+    com.apple.quicktime.software: 17.6.1
+    encoder         : Lavf61.1.100
+  Stream #0:0(und): Video: hevc (Main 10) (hvc1 / 0x31637668), yuv420p10le(tv, bt2020nc/bt2020/arib-std-b67), 1920x1080, q=2-31, 8557 kb/s, 30 fps, 30 tbr, 19200 tbn (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Video
+        vendor_id       : [0][0][0][0]
+        encoder         : HEVC
+      Side data:
+        DOVI configuration record: version: 1.0, profile: 8, level: 4, rpu flag: 1, el flag: 0, bl flag: 1, compatibility id: 4
+        Ambient Viewing Environment, ambient_illuminance=314.000000, ambient_light_x=0.312700, ambient_light_y=0.329000
+  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 187 kb/s (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Audio
+        vendor_id       : [0][0][0][0]
+Output #1, mp4, to '/IMG_6601.2.MOV.mp4':
+  Metadata:
+    major_brand     : qt
+    minor_version   : 0
+    compatible_brands: qt
+    com.apple.quicktime.creationdate: 2024-11-07T20:17:27+0800
+    com.apple.quicktime.location.accuracy.horizontal: 8.002625
+    com.apple.quicktime.location.ISO6709: +40.0530+116.2956+050.867/
+    com.apple.quicktime.make: Apple
+    com.apple.quicktime.model: iPhone 13
+    com.apple.quicktime.software: 17.6.1
+    encoder         : Lavf61.1.100
+  Stream #1:0(und): Video: hevc (Main 10) (hvc1 / 0x31637668), yuv420p10le(tv, bt2020nc/bt2020/arib-std-b67), 1920x1080, q=2-31, 8557 kb/s, 30 fps, 30 tbr, 19200 tbn (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Video
+        vendor_id       : [0][0][0][0]
+        encoder         : HEVC
+      Side data:
+        DOVI configuration record: version: 1.0, profile: 8, level: 4, rpu flag: 1, el flag: 0, bl flag: 1, compatibility id: 4
+        Ambient Viewing Environment, ambient_illuminance=314.000000, ambient_light_x=0.312700, ambient_light_y=0.329000
+  Stream #1:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 187 kb/s (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Audio
+        vendor_id       : [0][0][0][0]
+Output #2, mp4, to '/IMG_6601.3.MOV.mp4':
+  Metadata:
+    major_brand     : qt
+    minor_version   : 0
+    compatible_brands: qt
+    com.apple.quicktime.creationdate: 2024-11-07T20:17:27+0800
+    com.apple.quicktime.location.accuracy.horizontal: 8.002625
+    com.apple.quicktime.location.ISO6709: +40.0530+116.2956+050.867/
+    com.apple.quicktime.make: Apple
+    com.apple.quicktime.model: iPhone 13
+    com.apple.quicktime.software: 17.6.1
+    encoder         : Lavf61.1.100
+  Stream #2:0(und): Video: hevc (Main 10) (hvc1 / 0x31637668), yuv420p10le(tv, bt2020nc/bt2020/arib-std-b67), 1920x1080, q=2-31, 8557 kb/s, 30 fps, 30 tbr, 19200 tbn (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Video
+        vendor_id       : [0][0][0][0]
+        encoder         : HEVC
+      Side data:
+        DOVI configuration record: version: 1.0, profile: 8, level: 4, rpu flag: 1, el flag: 0, bl flag: 1, compatibility id: 4
+        Ambient Viewing Environment, ambient_illuminance=314.000000, ambient_light_x=0.312700, ambient_light_y=0.329000
+  Stream #2:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 187 kb/s (default)
+      Metadata:
+        creation_time   : 2024-11-07T12:17:27.000000Z
+        handler_name    : Core Media Audio
+        vendor_id       : [0][0][0][0]
+Press [q] to stop, [?] for help
+size=   10752KiB time=00:00:10.99 bitrate=8008.6kbits/s speed=1.66e+03x
+bitrate=8008.6kbits/s
+total_size=11010096
+out_time_us=10998333
+out_time_ms=10998333
+out_time=00:00:10.998333
+dup_frames=0
+drop_frames=0
+speed=1.66e+03x
+progress=continue
+[out#0/mp4 @ 0x600000728300] video:10700KiB audio:252KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.115629%
+[out#1/mp4 @ 0x600000728780] video:25946KiB audio:578KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.107830%
+[out#2/mp4 @ 0x600000728a80] video:57362KiB audio:1281KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.105543%
+size=   10964KiB time=00:00:10.95 bitrate=8196.3kbits/s speed= 376x
+bitrate=8196.3kbits/s
+total_size=11227317
+out_time_us=10958367
+out_time_ms=10958367
+out_time=00:00:10.958367
+dup_frames=0
+drop_frames=0
+speed= 376x
+progress=end
