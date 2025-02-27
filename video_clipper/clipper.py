@@ -1,22 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-import shutil
 import typing as ty  # noqa: F401
 
 import os
-import platform
-import pathlib
 import dataclasses
 import subprocess
 import yaml
-
-BASE_DIR = pathlib.Path(__file__).resolve().parent
-SAMPLE_MANIFEST = BASE_DIR / 'data' / 'manifest.sample.yaml'
-
-DEFAULT_VIDEO_CODEC = 'libx264'
-if platform.system() == 'Darwin':
-    DEFAULT_VIDEO_CODEC = 'h264_videotoolbox'
+import click
+from .constants import DEFAULT_VIDEO_CODEC
 
 
 @dataclasses.dataclass
@@ -132,8 +124,7 @@ class VideoClipper(object):
 
         os.remove(source)
 
-    def clip_from_manifest(self, manifest: Manifest,
-                           target_dir: str = None) -> None:
+    def clip_from_manifest(self, manifest: Manifest) -> None:
         if not os.path.exists(manifest.output_dir):
             os.makedirs(manifest.output_dir, exist_ok=True)
 
@@ -155,12 +146,11 @@ class VideoClipper(object):
         for clip in proceed_clips:
             self.compress_clip(clip)
 
+@click.command(name='clip')
+@click.argument('manifest-file', required=True,
+                type=click.Path(exists=True, dir_okay=False))
+def cli_clip_with_manifest(manifest_file: str) -> None:
+    manifest = Manifest.parse_manifest(manifest_file)
 
-def create_manifest(target: ty.Optional[str] = None):
-    if not target:
-        target = os.path.join(os.getcwd(), 'manifest.yaml')
-    elif os.path.isdir(target):
-        target = os.path.join(target, 'manifest.yaml')
-
-    shutil.copy(SAMPLE_MANIFEST, target)
-    print(target)
+    clipper = VideoClipper()
+    clipper.clip_from_manifest(manifest)
