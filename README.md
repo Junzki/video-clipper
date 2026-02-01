@@ -1,4 +1,6 @@
 # video-clipper
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FJunzki%2Fvideo-clipper.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FJunzki%2Fvideo-clipper?ref=badge_shield)
+
 
 Clips multiple video clips from one video file.
 
@@ -41,3 +43,6 @@ The `h264_qsv` encoder uses Intel's QuickSync, and has about 2x better performan
 
 ## License
 GPLv3
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FJunzki%2Fvideo-clipper.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FJunzki%2Fvideo-clipper?ref=badge_large)
